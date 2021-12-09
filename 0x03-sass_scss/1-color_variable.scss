@@ -1,0 +1,6 @@
+/* Change the text color of the body and p tags */
+$text_color: #3D3D3D;
+
+body, p {
+	color: $text_color;
+}
