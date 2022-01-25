@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 	<script type="application/javascript">
 		function setCookies() {
-			let firstN = document.getElementById("fristname").value;
+			let firstN = document.getElementById("firstname").value;
 			let mail = document.getElementById("email").value;
-			let expiration = (new Date())
-				expiration.setDate((new Date()).getDate()+10);
-			expiration = expiration.toUTCString();
-			document.cookie = "firstname="+firstN+"; expires="+expiration
-			document.cookie = "email="+mail+"; expires="+expiration
+			document.cookie = "firstname=" + firstN + ";"
+			document.cookie = "email=" + mail + ";"
+			let date = new Date();
+			date.setTime(date.getTime() + (864000 * 1000));
+			document.cookie = "expires= " + date.toUTCString();
 		}
 		function showCookies() {
-				let firstN = getCookie("firstname");
-				let mail = getCookie("email");
-                let paragraph = document.createElement("p");
-                paragraph.appendChild(document.createTextNode("Email: " + mail + " - Firstname: " + firstN));
-                document.body.appendChild(paragraph);
+			let cookie = document.cookie;
+			let paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Cookies: " + cookie));
+			document.body.appendChild(paragraph);
 		}
 		function getCookie(name) {
 			for (let i = 0; i < cookies.length; i++) {
@@ -29,10 +30,11 @@
 					return cookiesList[1];
 				}
 			}
-			return ' ';
+			return '';
 		}
 	</script>
 </head>
+
 <body>
 	<h1>Login to the website</h1>
 	<input type="text" id="firstname" placeholder="Firstname">
@@ -40,5 +42,7 @@
 	<button onclick="setCookies()">Log me in</button>
 	<h1>Cookies</h1>
 	<button onclick="showCookies()">Show the cookies</button>
+	<div id="cookieList"></div>
 </body>
+
 </html>

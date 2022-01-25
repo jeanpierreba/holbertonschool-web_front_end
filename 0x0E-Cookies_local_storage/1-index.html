@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +8,23 @@
 	<title>Document</title>
 	<script type="application/javascript">
 		function setCookies() {
-			let firstN = document.getElementById("fristname").value;
+			let firstN = document.getElementById("firstname").value;
 			let mail = document.getElementById("email").value;
-			let expiration = (new Date())
-				expiration.setDate((new Date()).getDate()+10);
-			expiration = expiration.toUTCString();
-			document.cookie = "firstname="+firstN+"; expires="+expiration
-			document.cookie = "email="+mail+"; expires="+expiration
+			document.cookie = "firstname=" + firstN + ";"
+			document.cookie = "email=" + mail + ";"
+			let date = new Date();
+			date.setTime(date.getTime() + (864000 * 1000));
+			document.cookie = "expires= " + date.toUTCString();
 		}
 		function showCookies() {
-				let cookie = document.cookie;
-                let paragraph = document.createElement("p");
-                paragraph.appendChild(document.createTextNode("Cookies: " + cookie));
-                document.body.appendChild(paragraph);
+			let cookie = document.cookie;
+			let paragraph = document.createElement("p");
+			paragraph.appendChild(document.createTextNode("Cookies: " + cookie));
+			document.body.appendChild(paragraph);
 		}
 	</script>
 </head>
+
 <body>
 	<h1>Login to the website</h1>
 	<input type="text" id="firstname" placeholder="Firstname">
@@ -31,4 +33,5 @@
 	<h1>Cookies</h1>
 	<button onclick="showCookies()">Show the cookies</button>
 </body>
+
 </html>
