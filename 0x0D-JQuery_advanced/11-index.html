@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="utf-8" />
+	<title>Task 0</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<script type="application/javascript">
+		window.onload = function () {
+			function addPostRow(data) {
+				$('body').append(`<p><span>Post created with id ${data.id}, title: ${data.title}, author: ${data.author}</span></p>`)
+			}
+			function listPosts() {
+				$.get("http://localhost:3000/posts", function (data, status) {
+					if (status === '200') {
+						for (let i = 0; i < data.length; i++) {
+							$.addPostRow(data[i]);
+						}
+					} else {
+						alert("Server Error")
+					}
+				});
+			}
+			function buildForm() {
+				$("body").append(`
+                        <form>
+                            <div>
+                                <label for="author">Author</label>
+                                <input type="text" id="author">
+                            </div>
+                            <div>
+                                <label for="title">Title</label>
+                                <textarea id="title"></textarea>
+                            </div>
+                            <input type="submit">
+                        </form>
+                    `);
+
+				$('form').submit(function (e) {
+					e.preventDefault();
+				});
+
+				$("form input:submit").click(function () {
+					sendForm()
+				});
+			}
+			function sendForm() {
+				$("body").append($("<p>").text("About to send the query to the API"))
+				const parameters = {
+					author: $("#author").val(),
+					title: $("#title").val()
+				};
+
+				$.post("http://localhost:3000/posts", parameters).done((result) => {
+					addPostRow(result);
+				}).fail(() => {
+					alert("SError sending the POST query");
+				});
+
+				$("#author").val("");
+				$("#title").val("");
+			}
+			listPosts();
+			buildForm();
+		}
+	</script>
+</body>
+
+</html>
